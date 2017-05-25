@@ -129,8 +129,12 @@ While this model takes far longer than the others to run, even with parallelizat
 Now that three models have been generated, a comparison seems in order. The following table compares the accuracy of the three models:
 
 ``` {r table}
-table <- rbind(gbmcfm$overall["Accuracy"],svmcfm$overall["Accuracy"],fitcm$overall["Accuracy"])
+table <- rbind(c(gbmcfm$overall["Accuracy"],1-gbmcfm$overall["Accuracy"]),
+               c(svmcfm$overall["Accuracy"],1-svmcfm$overall["Accuracy"]),
+               c(fitcm$overall["Accuracy"],1-fitcm$overall["Accuracy"]))                                                                          
 rownames(table)<- c("State Vector Machine","Gradient Boost Model","Random Forest Model")
+colnames(table)<- c("Accuracy","Exp. OOB Error")
+
 table
 ```
 

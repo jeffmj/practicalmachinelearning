@@ -334,13 +334,17 @@ fitcm</code></pre>
 <div id="compare-the-models" class="section level2">
 <h2>Compare the models</h2>
 <p>Now that three models have been generated, a comparison seems in order. The following table compares the accuracy of the three models:</p>
-<pre class="r"><code>table &lt;- rbind(gbmcfm$overall[&quot;Accuracy&quot;],svmcfm$overall[&quot;Accuracy&quot;],fitcm$overall[&quot;Accuracy&quot;])
+<pre class="r"><code>table &lt;- rbind(c(gbmcfm$overall[&quot;Accuracy&quot;],1-gbmcfm$overall[&quot;Accuracy&quot;]),
+               c(svmcfm$overall[&quot;Accuracy&quot;],1-svmcfm$overall[&quot;Accuracy&quot;]),
+               c(fitcm$overall[&quot;Accuracy&quot;],1-fitcm$overall[&quot;Accuracy&quot;]))                                                                          
 rownames(table)&lt;- c(&quot;State Vector Machine&quot;,&quot;Gradient Boost Model&quot;,&quot;Random Forest Model&quot;)
+colnames(table)&lt;- c(&quot;Accuracy&quot;,&quot;Exp. OOB Error&quot;)
+
 table</code></pre>
-<pre><code>##                       Accuracy
-## State Vector Machine 0.9314300
-## Gradient Boost Model 0.8801937
-## Random Forest Model  0.9928626</code></pre>
+<pre><code>##                       Accuracy Exp. OOB Error
+## State Vector Machine 0.9314300    0.068569972
+## Gradient Boost Model 0.8801937    0.119806271
+## Random Forest Model  0.9928626    0.007137395</code></pre>
 <p>The lowest error rate is from the Random Forest model, so use that to get the test set results. The code to generate the test set follows:</p>
 <pre class="r"><code>testset &lt;- predict(fit,validnoNA[,-40])
 testset</code></pre>
